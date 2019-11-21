@@ -39,7 +39,12 @@ Class User extends REST_Controller{
         $user = new UserData(); 
         $user->name = $this->post('name'); 
         $user->password = $this->post('password'); 
-        $user->email = $this->post('email'); 
+        $user->email = $this->post('email');
+        $user->tempatLahir = $this->post('tempatLahir');
+        $user->tanggalLahir = $this->post('tanggalLahir');
+        $user->umur = $this->post('umur');
+        $user->jenisKelamin = $this->post('jenisKelamin');
+        $user->bpjs = $this->post('bpjs');
         if($id == null){ 
             $response = $this->UserModel->store($user);
         }else{ 
@@ -63,5 +68,10 @@ Class User extends REST_Controller{
 Class UserData{ 
     public $name; 
     public $password; 
-    public $email; 
+    public $email;
+    public $tempatLahir;
+    public $tanggalLahir;
+    public $umur;
+    public $jenisKelamin;
+    public $bpjs;
 }

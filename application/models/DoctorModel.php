@@ -1,13 +1,12 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class SparepartModel extends CI_Model 
+class DoctorModel extends CI_Model 
 { 
-    private $table = 'spareparts'; 
+    private $table = 'dokter'; 
     public $id; 
     public $name; 
-    public $merk; 
-    public $amount;
-    public $created_at;
+    public $spesialis; 
+    public $rumahSakit;
     public $rule = [ 
         [ 
             'field' => 'name', 
@@ -15,15 +14,15 @@ class SparepartModel extends CI_Model
             'rules' => 'required' 
         ],
         [ 
-            'field' => 'merk', 
-            'label' => 'merk', 
+            'field' => 'spesialis', 
+            'label' => 'spesialis', 
             'rules' => 'required' 
-        ], 
+        ],
         [ 
-            'field' => 'amount', 
-            'label' => 'amount', 
+            'field' => 'rumahSakit', 
+            'label' => 'rumahSakit', 
             'rules' => 'required' 
-        ], 
+        ]
     ]; 
     public function Rules() { return $this->rule; } 
     
@@ -32,18 +31,20 @@ class SparepartModel extends CI_Model
     // } 
     
     public function store($request) { 
-        $now = date("Y-m-d H:i:s");
-        $this->name = $request->name;
-        $this->merk = $request->merk;
-        $this->amount = $request->amount;
-        $this->created_at = $now;
+        $this->name = $request->name; 
+        $this->spesialis = $request->spesialis; 
+        $this->rumahSakit = $request->rumahSakit;
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
         } 
         return ['msg'=>'Gagal','error'=>true]; 
     } 
     public function update($request,$id) { 
-        $updateData = ['name' => $request->name, 'merk' =>$request->merk, 'amount' =>$request->amount]; 
+        $updateData = [
+            'name' => $request->name,
+            'spesialis' => $request->spesialis,
+            'rumahSakit' => $request->rumahSakit,
+        ]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 
         } 
@@ -57,6 +58,15 @@ class SparepartModel extends CI_Model
             return ['msg'=>'Berhasil','error'=>false]; 
         } 
         return ['msg'=>'Gagal','error'=>true]; 
-    } 
+    }
+
+    // public function verify($request){
+    //     $user = $this->db->select('*')->where(array('email' => $request->email))->get($this->table)->row_array();
+    //     if(!empty($user) && password_verify($request->password , $user['password'])) {
+    //         return $user;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 } 
 ?>

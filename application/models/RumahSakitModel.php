@@ -1,12 +1,11 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class DoctorModel extends CI_Model 
+class RumahSakitModel extends CI_Model 
 { 
-    private $table = 'dokter'; 
+    private $table = 'rumahSakit'; 
     public $id; 
     public $name; 
-    public $spesialis; 
-    public $id_rumahSakit;
+    public $alamat; 
     public $rule = [ 
         [ 
             'field' => 'name', 
@@ -14,13 +13,8 @@ class DoctorModel extends CI_Model
             'rules' => 'required' 
         ],
         [ 
-            'field' => 'spesialis', 
-            'label' => 'spesialis', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'id_rumahSakit', 
-            'label' => 'id_rumahSakit', 
+            'field' => 'alamat', 
+            'label' => 'alamat', 
             'rules' => 'required' 
         ]
     ]; 
@@ -32,8 +26,7 @@ class DoctorModel extends CI_Model
     
     public function store($request) { 
         $this->name = $request->name; 
-        $this->spesialis = $request->spesialis; 
-        $this->id_rumahSakit = $request->id_rumahSakit;
+        $this->alamat = $request->alamat;
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
         } 
@@ -42,8 +35,7 @@ class DoctorModel extends CI_Model
     public function update($request,$id) { 
         $updateData = [
             'name' => $request->name,
-            'spesialis' => $request->spesialis,
-            'id_rumahSakit' => $request->id_rumahSakit,
+            'alamat' => $request->alamat
         ]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 

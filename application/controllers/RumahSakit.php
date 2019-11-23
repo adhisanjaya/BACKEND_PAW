@@ -1,44 +1,42 @@
 <?php 
 use Restserver \Libraries\REST_Controller ; 
-Class Doctor extends REST_Controller{
+Class RumahSakit extends REST_Controller{
 
     public function __construct(){ 
         header('Access-Control-Allow-Origin: *'); 
         header("Access-Control-Allow-Methods: GET, OPTIONS, POST, DELETE"); 
         header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding"); 
-        parent::__construct(); $this->load->model('DoctorModel'); $this->load->library('form_validation'); 
+        parent::__construct(); $this->load->model('RumahSakitModel'); $this->load->library('form_validation'); 
     } 
     public function index_get(){ 
-        return $this->returnData($this->db->get('dokter')->result(), false); 
+        return $this->returnData($this->db->get('rumahSakit')->result(), false); 
     } 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
-        $rule = $this->DoctorModel->rules(); 
+        $rule = $this->RumahSakitModel->rules(); 
         if($id == null){ 
             array_push($rule,[ 
-                'field' => 'id_rumahSakit', 
-                'label' => 'id_rumahSakit', 
+                'field' => 'name', 
+                'label' => 'name', 
                 'rules' => 'required' 
-            ] ); 
-        } else{ 
-            array_push($rule, [ 
-                'field' => 'id_rumahSakit', 
-                'label' => 'id_rumahSakit', 
+            ], 
+            [ 
+                'field' => 'alamat', 
+                'label' => 'alamat', 
                 'rules' => 'required' 
             ] ); 
         } 
-        $validation->set_rules($rule);
+        $validation->set_rules($rule); 
         if (!$validation->run()) { 
             return $this->returnData($this->form_validation->error_array(), true); 
         } 
-        $doctor = new DoctorData(); 
-        $doctor->name = $this->post('name'); 
-        $doctor->spesialis = $this->post('spesialis'); 
-        $doctor->id_rumahSakit = $this->post('id_rumahSakit');
+        $rumahSakit = new RumahSakitData(); 
+        $rumahSakit->name = $this->post('name'); 
+        $rumahSakit->alamat = $this->post('alamat'); 
         if($id == null){ 
-            $response = $this->DoctorModel->store($doctor);
+            $response = $this->RumahSakitModel->store($rumahSakit);
         }else{ 
-            $response = $this->DoctorModel->update($doctor,$id); 
+            $response = $this->RumahSakitModel->update($rumahSakit,$id); 
         } 
         return $this->returnData($response['msg'], $response['error']); 
     } 
@@ -46,7 +44,7 @@ Class Doctor extends REST_Controller{
         if($id == null){ 
             return $this->returnData('Parameter Id Tidak Ditemukan', true); 
         } 
-        $response = $this->DoctorModel->destroy($id); 
+        $response = $this->RumahSakitModel->destroy($id); 
         return $this->returnData($response['msg'], $response['error']); 
     } 
     public function returnData($msg,$error){ 
@@ -55,8 +53,7 @@ Class Doctor extends REST_Controller{
         return $this->response($response); 
     } 
 } 
-Class DoctorData{ 
+Class RumahSakitData{ 
     public $name; 
-    public $spesialis; 
-    public $id_rumahSakit;
+    public $alamat; 
 }

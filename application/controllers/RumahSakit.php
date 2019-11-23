@@ -8,9 +8,10 @@ Class RumahSakit extends REST_Controller{
         header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding"); 
         parent::__construct(); $this->load->model('RumahSakitModel'); $this->load->library('form_validation'); 
     } 
-    public function index_get(){ 
-        return $this->returnData($this->db->get('rumahSakit')->result(), false); 
-    } 
+    public function index_get(){
+        return $this->returnData($this->db->get('rumahSakit')->result(), false);
+    }
+     
     public function index_post($id = null){ 
         $validation = $this->form_validation; 
         $rule = $this->RumahSakitModel->rules(); 

@@ -8,8 +8,22 @@ Class Doctor extends REST_Controller{
         header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding"); 
         parent::__construct(); $this->load->model('DoctorModel'); $this->load->library('form_validation'); 
     } 
-    public function index_get(){ 
-        return $this->returnData($this->db->get('dokter')->result(), false); 
+    public function index_get($id = null){ 
+        if($id==null)
+        {
+            $this->db->select('d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name');
+            $this->db->from('dokter as d');
+            $this->db->join('rumahSakit as rs', 'rs.id = d.id_rumahSakit');
+        }else{
+            $this->db->select('d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name');
+            $this->db->from('dokter as d');
+            $this->db->join('rumahSakit as rs', 'rs.id = d.id_rumahSakit');
+            $this->db->where('d.id', $id);
+        }
+        
+        $query=$this->db->get();
+        $data=$query->result_array();
+        return $this->returnData($data, false); 
     } 
     public function index_post($id = null){ 
         $validation = $this->form_validation; 

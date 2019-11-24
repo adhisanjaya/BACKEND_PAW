@@ -12,53 +12,21 @@ class UserModel extends CI_Model
     public $umur;
     public $jenisKelamin;
     public $bpjs;
+    public $user_type;
+    public $created_at;
+    public $image;
     public $rule = [ 
-        [ 
-            'field' => 'name', 
-            'label' => 'name', 
-            'rules' => 'required' 
-        ],
         [ 
             'field' => 'email', 
             'label' => 'email', 
             'rules' => 'required' 
         ],
-        [ 
-            'field' => 'password', 
-            'label' => 'password', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'tempatLahir', 
-            'label' => 'tempatLahir', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'tanggalLahir', 
-            'label' => 'tanggalLahir', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'umur', 
-            'label' => 'umur', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'jenisKelamin', 
-            'label' => 'jenisKelamin', 
-            'rules' => 'required' 
-        ],
-        [ 
-            'field' => 'bpjs', 
-            'label' => 'bpjs', 
-            'rules' => 'required' 
-        ],
     ]; 
     public function Rules() { return $this->rule; } 
     
-    // public function getAll() { return 
-    //     $this->db->get('data_mahasiswa')->result(); 
-    // } 
+    public function getAll() { return 
+        $this->db->get($this->table)->result();
+    } 
     
     public function store($request) { 
         $this->name = $request->name; 
@@ -69,10 +37,13 @@ class UserModel extends CI_Model
         $this->umur = $request->umur;
         $this->jenisKelamin = $request->jenisKelamin;
         $this->bpjs = $request->bpjs;
+        $this->created_at = $request->created_at;
+        $this->user_type = $request->user_type;
+        $this->image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQZheYQGXrxrzKGG-iVf1KHxPqepfFJbHiUHETcHdoDKa2GTXCr';
         if($this->db->insert($this->table, $this)){ 
-            return ['msg'=>'Berhasil','error'=>false];
+            return ['msg'=>'Berhasil Simpan User','error'=>false];
         } 
-        return ['msg'=>'Gagal','error'=>true]; 
+        return ['msg'=>'Gagal Simpan User','error'=>true]; 
     } 
     public function update($request,$id) { 
         $updateData = [
@@ -82,12 +53,13 @@ class UserModel extends CI_Model
             'tanggalLahir' => $request->tanggalLahir,
             'umur' => $request->umur,
             'jenisKelamin' => $request->jenisKelamin,
-            'bpjs' => $request->bpjs
-        ]; 
+            'bpjs' => $request->bpjs,
+            'image'=>$request->image ,
+            'user_type'=>$request->user_type];
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
-            return ['msg'=>'Berhasil','error'=>false]; 
+            return ['msg'=>'Berhasil Update User','error'=>false]; 
         } 
-        return ['msg'=>'Gagal','error'=>true]; 
+        return ['msg'=>'Gagal Update User','error'=>true]; 
     } 
         
     public function destroy($id){ 

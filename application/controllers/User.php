@@ -3,9 +3,9 @@ use Restserver \Libraries\REST_Controller ;
 Class User extends REST_Controller{
 
     public function __construct(){ 
-        header('Access-Control-Allow-Origin: *'); 
-        header("Access-Control-Allow-Methods: GET, OPTIONS, POST, DELETE"); 
-        header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding"); 
+        header('Access-Control-Allow-Origin:*');
+        header("Access-Control-Allow-Methods:GET,OPTIONS,POST,DELETE");
+        header("Access-Control-Allow-Headers:Content-Type,Content-Length,Accept-Encoding,Authorization");
         parent::__construct(); $this->load->model('UserModel'); $this->load->library('form_validation'); 
     } 
     public function index_get(){ 
@@ -35,7 +35,9 @@ Class User extends REST_Controller{
         $validation->set_rules($rule); 
         if (!$validation->run()) { 
             return $this->returnData($this->form_validation->error_array(), true); 
-        } 
+        }
+        date_default_timezone_set('Asia/Jakarta');
+        $now = date('Y-m-d H:i:s');
         $user = new UserData(); 
         $user->name = $this->post('name'); 
         $user->password = $this->post('password'); 
@@ -45,6 +47,10 @@ Class User extends REST_Controller{
         $user->umur = $this->post('umur');
         $user->jenisKelamin = $this->post('jenisKelamin');
         $user->bpjs = $this->post('bpjs');
+        $user->created_at= $now;
+        $user->user_type = $this->post('user_type');
+        $user->image = $this->post('image');
+
         if($id == null){ 
             $response = $this->UserModel->store($user);
         }else{ 
@@ -74,4 +80,7 @@ Class UserData{
     public $umur;
     public $jenisKelamin;
     public $bpjs;
+    public $user_type;
+    public $created_at;
+    public $image;
 }

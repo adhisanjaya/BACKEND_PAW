@@ -39,7 +39,7 @@ class UserModel extends CI_Model
         $this->bpjs = $request->bpjs;
         $this->created_at = $request->created_at;
         $this->user_type = $request->user_type;
-        $this->image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQZheYQGXrxrzKGG-iVf1KHxPqepfFJbHiUHETcHdoDKa2GTXCr';
+        $this->image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png';
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil Simpan User','error'=>false];
         } 

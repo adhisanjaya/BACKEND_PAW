@@ -1,49 +1,66 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class SparepartModel extends CI_Model 
+class AgreementModel extends CI_Model 
 { 
-    private $table = 'spareparts'; 
-    public $id;
-    public $name; 
-    public $tanggalLahir; 
-    public $amount;
-    public $created_at;
+    private $table = 'agreement'; 
+    public $id; 
+    public $id_user; 
+    public $id_dokter;
+    public $tanggalJanji;
+    public $id_rumahSakit;
+    public $keluhan;
     public $rule = [ 
         [ 
-            'field' => 'name', 
-            'label' => 'name', 
+            'field' => 'id_user', 
+            'label' => 'id_user', 
             'rules' => 'required' 
         ],
         [ 
-            'field' => 'merk', 
-            'label' => 'merk', 
+            'field' => 'id_dokter', 
+            'label' => 'id_dokter', 
             'rules' => 'required' 
-        ], 
+        ],
         [ 
-            'field' => 'amount', 
-            'label' => 'amount', 
+            'field' => 'tanggalJanji', 
+            'label' => 'tanggalJanji', 
             'rules' => 'required' 
-        ], 
+        ],
+        [ 
+            'field' => 'id_rumahSakit', 
+            'label' => 'id_rumahSakit', 
+            'rules' => 'required' 
+        ],
+        [ 
+            'field' => 'keluhan', 
+            'label' => 'keluhan', 
+            'rules' => 'required' 
+        ]
     ]; 
     public function Rules() { return $this->rule; } 
     
     // public function getAll() { return 
-    //     $this->db->get('data_mahasiswa')->result(); 
+    //     $this->db->get('agreement')->result(); 
     // } 
     
     public function store($request) { 
-        $now = date("Y-m-d H:i:s");
-        $this->name = $request->name;
-        $this->merk = $request->merk;
-        $this->amount = $request->amount;
-        $this->created_at = $now;
+        $this->id_user = $request->id_user; 
+        $this->id_dokter = $request->id_dokter;
+        $this->tanggalJanji = $request->tanggalJanji;
+        $this->id_rumahSakit = $request->id_rumahSakit;
+        $this->keluhan = $request->keluhan;
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
         } 
         return ['msg'=>'Gagal','error'=>true]; 
     } 
     public function update($request,$id) { 
-        $updateData = ['name' => $request->name, 'merk' =>$request->merk, 'amount' =>$request->amount]; 
+        $updateData = [
+            'id_user' => $request->id_user,
+            'id_dokter' => $request->id_dokter,
+            'tanggalJanji' => $request->tanggalJanji,
+            'id_rumahSakit' => $request->id_rumahSakit,
+            'keluhan'=>$request->keluhan,
+        ]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 
         } 
@@ -57,6 +74,6 @@ class SparepartModel extends CI_Model
             return ['msg'=>'Berhasil','error'=>false]; 
         } 
         return ['msg'=>'Gagal','error'=>true]; 
-    } 
+    }
 } 
 ?>

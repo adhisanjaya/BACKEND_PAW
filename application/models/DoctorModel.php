@@ -7,6 +7,7 @@ class DoctorModel extends CI_Model
     public $name; 
     public $spesialis; 
     public $id_rumahSakit;
+    public $image;
     public $rule = [ 
         [ 
             'field' => 'name', 
@@ -22,18 +23,24 @@ class DoctorModel extends CI_Model
             'field' => 'id_rumahSakit', 
             'label' => 'id_rumahSakit', 
             'rules' => 'required' 
+        ],
+        [ 
+            'field' => 'image', 
+            'label' => 'image', 
+            'rules' => 'required' 
         ]
     ]; 
     public function Rules() { return $this->rule; } 
     
-    // public function getAll() { return 
-    //     $this->db->get('data_mahasiswa')->result(); 
-    // } 
+    public function getAll() { return 
+        $this->db->get('dokter')->result(); 
+    } 
     
     public function store($request) { 
         $this->name = $request->name; 
         $this->spesialis = $request->spesialis; 
         $this->id_rumahSakit = $request->id_rumahSakit;
+        $this->image= $request->image;
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
         } 
@@ -44,6 +51,7 @@ class DoctorModel extends CI_Model
             'name' => $request->name,
             'spesialis' => $request->spesialis,
             'id_rumahSakit' => $request->id_rumahSakit,
+            'image'=>$request->image,
         ]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 
@@ -60,13 +68,6 @@ class DoctorModel extends CI_Model
         return ['msg'=>'Gagal','error'=>true]; 
     }
 
-    // public function verify($request){
-    //     $user = $this->db->select('*')->where(array('email' => $request->email))->get($this->table)->row_array();
-    //     if(!empty($user) && password_verify($request->password , $user['password'])) {
-    //         return $user;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+
 } 
 ?>

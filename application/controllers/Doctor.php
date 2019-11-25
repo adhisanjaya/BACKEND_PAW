@@ -11,11 +11,11 @@ Class Doctor extends REST_Controller{
     public function index_get($id = null){ 
         if($id==null)
         {
-            $this->db->select('d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name');
+            $this->db->select('d.id, d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name, d.image as image');
             $this->db->from('dokter as d');
             $this->db->join('rumahSakit as rs', 'rs.id = d.id_rumahSakit');
         }else{
-            $this->db->select('d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name');
+            $this->db->select('d.id, d.name as name, d.spesialis as spesialis, rs.name as rumahSakit_name, d.image as image');
             $this->db->from('dokter as d');
             $this->db->join('rumahSakit as rs', 'rs.id = d.id_rumahSakit');
             $this->db->where('d.id', $id);
@@ -49,6 +49,7 @@ Class Doctor extends REST_Controller{
         $doctor->name = $this->post('name'); 
         $doctor->spesialis = $this->post('spesialis'); 
         $doctor->id_rumahSakit = $this->post('id_rumahSakit');
+        $doctor->image = $this->post('image');
         if($id == null){ 
             $response = $this->DoctorModel->store($doctor);
         }else{ 
@@ -73,4 +74,5 @@ Class DoctorData{
     public $name; 
     public $spesialis; 
     public $id_rumahSakit;
+    public $image;
 }

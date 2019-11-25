@@ -1,5 +1,8 @@
 <?php 
-use Restserver \Libraries\REST_Controller ; 
+
+use Restserver\Libraries\REST_Controller;
+require(APPPATH . 'libraries/REST_Controller.php');
+
 Class User extends REST_Controller{
 
     public function __construct(){ 

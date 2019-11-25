@@ -1,6 +1,7 @@
 <?php
 
 use Restserver\Libraries\REST_Controller;
+require(APPPATH . 'libraries/REST_Controller.php');
 
 class Login extends REST_Controller
 {
